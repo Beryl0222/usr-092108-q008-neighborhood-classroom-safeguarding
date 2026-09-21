@@ -23,7 +23,33 @@
         "STAFF_CLEARED",
         "SESSION_REASSIGNED",
         "PICKUP_CHANGED",
-        "CASE_ESCALATED"
+        "CASE_ESCALATED",
+        "APPLICATION_SUBMITTED",
+        "SITE_REGISTERED",
+        "SITE_COORDINATOR_DESIGNATED",
+        "SESSION_SCHEDULED",
+        "SESSION_CANCELLED",
+        "CARE_ARRANGEMENT_RECORDED",
+        "GUARDIAN_AUTHORIZED",
+        "PICKUP_RELATION_ADDED",
+        "TEMP_PICKUP_REQUESTED",
+        "STAFF_REGISTERED",
+        "QUALIFICATION_RECORDED",
+        "QUALIFICATION_EXPIRED",
+        "STAFF_ABSENCE_REPORTED",
+        "TASK_ASSIGNED",
+        "TASK_RELEASED",
+        "CHECK_IN_RECORDED",
+        "CHECK_IN_BACKFILLED",
+        "CHILD_ATTENDANCE_RECORDED",
+        "OUTING_PLANNED",
+        "OUTING_CONSENTED",
+        "HOME_VISIT_SCHEDULED",
+        "HOME_VISIT_COMPLETED",
+        "TRANSFER_REQUESTED",
+        "TRANSFER_CONFIRMED",
+        "CASE_NOTE_ADDED",
+        "CASE_STATUS_UPDATED"
       ]
     },
     "aggregate_type": {
@@ -32,7 +58,14 @@
         "child_enrollment",
         "site_session",
         "staff_assignment",
-        "safeguarding_case"
+        "safeguarding_case",
+        "family_application",
+        "site",
+        "pickup_authorization",
+        "attendance",
+        "outing_plan",
+        "home_visit",
+        "transfer_request"
       ]
     },
     "aggregate_id": {
