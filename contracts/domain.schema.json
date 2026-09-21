@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "邻里课堂安全协作领域事件",
+  "description": "家庭申请至事件处置全链路事件信封。事件一经接收即不可原地改写，更正只能产生后继事件；敏感字段按数据分级随事件标注。",
   "type": "object",
   "required": [
     "event_id",
@@ -19,20 +20,71 @@
     "event_type": {
       "type": "string",
       "enum": [
+        "APPLICATION_SUBMITTED",
+        "ELIGIBILITY_REVIEWED",
+        "APPLICATION_APPROVED",
+        "APPLICATION_WAITLISTED",
         "ENROLLMENT_CONFIRMED",
-        "STAFF_CLEARED",
-        "SESSION_REASSIGNED",
+        "ENROLLMENT_CANCELLED",
+        "WAITLIST_PROMOTED",
+        "SEAT_PRIORITY_APPLIED",
+        "GUARDIANSHIP_AUTHORIZED",
+        "PICKUP_AUTHORIZED",
         "PICKUP_CHANGED",
-        "CASE_ESCALATED"
+        "PICKUP_CONFIRMED",
+        "PICKUP_REJECTED",
+        "SITE_REGISTERED",
+        "SITE_CAPACITY_CHANGED",
+        "SESSION_PLANNED",
+        "SESSION_RISK_REVIEWED",
+        "SESSION_CANCELLED",
+        "REASSIGNMENT_OFFERED",
+        "SESSION_REASSIGNED",
+        "STAFF_REGISTERED",
+        "STAFF_CLEARED",
+        "CREDENTIAL_EXPIRING",
+        "CREDENTIAL_EXPIRED",
+        "ASSIGNMENT_SCHEDULED",
+        "ASSIGNMENT_TASK_BLOCKED",
+        "STAFF_ABSENT",
+        "ASSIGNMENT_TASK_RELEASED",
+        "ASSIGNMENT_TASK_RECLAIMED",
+        "CHECKIN_RECORDED",
+        "CHECKOUT_RECORDED",
+        "OFFLINE_CHECKIN_QUEUED",
+        "ATTENDANCE_RECONCILED",
+        "OUTING_PLANNED",
+        "OUTING_APPROVED",
+        "OUTING_DEPARTED",
+        "OUTING_RETURNED",
+        "HOME_VISIT_SCHEDULED",
+        "HOME_VISIT_CONFIRMED",
+        "HOME_VISIT_COMPLETED",
+        "SAFEGUARDING_CONCERN_RAISED",
+        "CASE_ESCALATED",
+        "CASE_ASSIGNED",
+        "GUARDIAN_NOTIFIED",
+        "INCIDENT_RECORDED",
+        "RECORD_RETENTION_LOCKED",
+        "CASE_RESOLVED",
+        "DEIDENTIFIED_DATASET_RELEASED"
       ]
     },
     "aggregate_type": {
       "type": "string",
       "enum": [
+        "family_application",
         "child_enrollment",
+        "guardianship_grant",
+        "site",
         "site_session",
+        "staff_member",
         "staff_assignment",
-        "safeguarding_case"
+        "attendance_record",
+        "activity_outing",
+        "home_visit",
+        "safeguarding_case",
+        "analytics_dataset"
       ]
     },
     "aggregate_id": {
@@ -50,6 +102,49 @@
     "summary": {
       "type": "string",
       "minLength": 1
+    },
+    "actor": {
+      "type": "object",
+      "description": "触发事件的责任人。角色决定其可执行动作与可读字段。",
+      "required": ["actor_id", "role"],
+      "properties": {
+        "actor_id": { "type": "string", "minLength": 1 },
+        "role": {
+          "type": "string",
+          "enum": [
+            "guardian",
+            "certified_social_worker",
+            "league_cadre",
+            "site_lead",
+            "volunteer",
+            "course_provider",
+            "enterprise_host",
+            "operations_staff",
+            "city_project_team",
+            "system"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "site_id": {
+      "type": "string",
+      "description": "事件归属点位（社区/乡村/企业/园区课堂），用于按点隔离查询。"
+    },
+    "data_classification": {
+      "type": "string",
+      "description": "本条记录的数据分级：operational=运营必要状态，restricted=家庭敏感资料（仅实际服务的持证人员），sealed=证据保全记录。",
+      "enum": ["operational", "restricted", "sealed"]
+    },
+    "related_events": {
+      "type": "array",
+      "description": "前驱/关联事件 id，保证临时接送、跨点调班、补签、升级等链路可追踪。",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "payload": {
+      "type": "object",
+      "description": "事件业务字段，结构见 src/domain.ts 与 docs/domain-model.md。"
     }
   },
   "additionalProperties": true
